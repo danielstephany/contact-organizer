@@ -25,16 +25,19 @@ const SectionActionsComp = ({
     )
 }
 
-const SectionActions = styled(SectionActionsComp).attrs<sectionActionsProps>(({ }) => ({}))`
+const SectionActions = styled(SectionActionsComp).attrs<sectionActionsProps>(({
+    padding
+}) => ({
+    padding: padding || 0
+}))`
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: ${({ paddingY, padding }) => ((paddingY || padding ) + "px")} ${({ paddingX, padding }) => ((paddingX || padding ) + "px") };
     ${({ paddingTop }) => paddingTop ? `padding-top: ${paddingTop}px;` : ""}
     ${({ paddingBottom }) => paddingBottom ? `padding-bottom: ${paddingBottom}px;` : ""}
-    section-actions__left,
-    section-actions__right {
-        
+    .section-actions__right {
+        margin-left: auto;
     }
 `
 

@@ -46,8 +46,7 @@ const ManageContactsForm = () => {
                 </Grid>
             </Grid>
             <SectionActions
-                paddingTop={24}
-                leftActions={<Button>Submit</Button>}
+                paddingTop={32}
                 rightActions={<Button>Submit</Button>}
             />
         </form>
