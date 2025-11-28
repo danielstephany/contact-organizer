@@ -14,6 +14,7 @@ const Grid = styled.div.attrs<gridProps>(({
     spacing,
 }) => ({
     spacing: spacing || initialSpacing,
+   
 }))`
     display: flex;
     flex-wrap: wrap;

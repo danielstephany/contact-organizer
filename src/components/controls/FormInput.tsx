@@ -7,13 +7,17 @@ interface formInputProps extends React.ComponentProps<'input'> {
 
 const FormInputComp = ({
     label,
-    className
+    className,
+    ...others
 }: formInputProps) => {
     return (
         <div className={className}>
             <label className="form-input_label">
                 { label && <span className="form-input_label-text">{label}</span>}
-                <input className="form-input_input" type="text" value="" />
+                <input 
+                    className="form-input_input" 
+                    {...others}
+                />
             </label>
         </div>
     )

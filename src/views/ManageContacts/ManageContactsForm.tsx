@@ -3,10 +3,17 @@ import FormInput from '@src/components/controls/FormInput'
 import Grid from '@src/components/elements/Grid'
 import SectionActions from '@src/components/modules/SectionActions'
 import Button from '@src/components/controls/Button'
+import useFormCtrl from '@src/hooks/useFormCtrl'
 
 const ManageContactsForm = () => {
     const [values, setValues] = useState({
         firstName: ""
+    })
+
+    const formCtrl = useFormCtrl({
+        initialValues: {
+            firstName: ""
+        }
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,8 +28,8 @@ const ManageContactsForm = () => {
                     <FormInput 
                         label="First Name"
                         name="firstName"
-                        value={values.firstName}
-                        onChange={handleInputChange}
+                        value={formCtrl.values.firstName}
+                        onChange={formCtrl.handleChange}
                         fullWidth
                     />
                 </Grid>
