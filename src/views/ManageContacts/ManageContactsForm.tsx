@@ -12,17 +12,20 @@ const ManageContactsForm = () => {
 
     const formCtrl = useFormCtrl({
         initialValues: {
-            firstName: ""
+            firstName: "",
+            lastName: "",
+            email: "",
         }
     })
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setValues({ ...values, [name]: value})
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        formCtrl.validate();
     }
 
     return (
-        <form>
+        <form noValidate onSubmit={handleSubmit}>
             <Grid container spacingY={16} spacing={24}>
                 <Grid size={6}>
                     <FormInput 
@@ -30,6 +33,7 @@ const ManageContactsForm = () => {
                         name="firstName"
                         value={formCtrl.values.firstName}
                         onChange={formCtrl.handleChange}
+                        error={formCtrl.errors.firstName}
                         fullWidth
                     />
                 </Grid>
@@ -37,8 +41,9 @@ const ManageContactsForm = () => {
                     <FormInput
                         label="Last Name"
                         name="lastName"
-                        value={values.firstName}
-                        onChange={handleInputChange}
+                        value={formCtrl.values.lastName}
+                        onChange={formCtrl.handleChange}
+                        error={formCtrl.errors.lastName}
                         fullWidth
                     />
                 </Grid>
@@ -46,15 +51,16 @@ const ManageContactsForm = () => {
                     <FormInput
                         label="Email"
                         name="email"
-                        value={values.firstName}
-                        onChange={handleInputChange}
+                        value={formCtrl.values.email}
+                        onChange={formCtrl.handleChange}
+                        error={formCtrl.errors.email}
                         fullWidth
                     />
                 </Grid>
             </Grid>
             <SectionActions
                 paddingTop={32}
-                rightActions={<Button>Submit</Button>}
+                rightActions={<Button type="submit">Submit</Button>}
             />
         </form>
     )

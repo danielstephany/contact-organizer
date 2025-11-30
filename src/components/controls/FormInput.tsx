@@ -3,11 +3,13 @@ import styled from 'styled-components'
 interface formInputProps extends React.ComponentProps<'input'> {
     label?: string,
     fullWidth?: boolean,
+    error?: boolean | string
 }
 
 const FormInputComp = ({
     label,
     className,
+    error,
     ...others
 }: formInputProps) => {
     return (
@@ -36,7 +38,7 @@ const FormInput = styled(FormInputComp).attrs<formInputProps>(({})=>({}))`
         font-weight: 400;
     }
     .form-input_input {
-        border: 1px solid #bbb;
+        border: 1px solid ${({ error }) => error ? "#ff0000" : "#bbb"};
         border-radius: 4px;
         padding: 4px;
     }
