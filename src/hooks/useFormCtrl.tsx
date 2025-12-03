@@ -19,6 +19,11 @@ const defaultValidate = <v extends object,>(values: v) => {
     return errors
 }
 
+const focusError = () => {
+    const errorInput: HTMLInputElement | null = document.querySelector(".input-error")
+    if(errorInput) errorInput.focus()
+}
+
 const useFormCtrl = <v extends object,>({ 
     initialValues,
     valiadate=defaultValidate,
@@ -34,8 +39,11 @@ const useFormCtrl = <v extends object,>({
 
     const validate = () => {
         const formErrors = valiadate(values)
-        console.log(formErrors)
         setErrors(formErrors)
+        setTimeout(() => {
+            focusError();
+        }, 0)
+        
         return Object.values(formErrors).filter(value => value).length === 0;
     }
 
