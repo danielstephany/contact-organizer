@@ -1,21 +1,34 @@
-import {useState} from 'react'
 import FormInput from '@src/components/controls/FormInput'
 import Grid from '@src/components/elements/Grid'
 import SectionActions from '@src/components/modules/SectionActions'
 import Button from '@src/components/controls/Button'
 import useFormCtrl from '@src/hooks/useFormCtrl'
+import type { tErrors, tValues } from "@src/hooks/useFormCtrl"
+import { EMAIL_REGEX } from "@src/constants/index"
+
+const validate = (values: tValues) => {
+    const errors: tErrors = {};
+
+    Object.entries(values).forEach(([key, value]) => {
+        if (key === "email" && !EMAIL_REGEX.test(value)){
+            errors[key] = "Please enter a valid email"
+        } else if (!value) {
+            errors[key] = true
+        }
+    })
+
+    return errors
+}
 
 const ManageContactsForm = () => {
-    const [values, setValues] = useState({
-        firstName: ""
-    })
 
     const formCtrl = useFormCtrl({
         initialValues: {
             firstName: "",
             lastName: "",
             email: "",
-        }
+        },
+        validate
     })
 
     const handleSubmit = (e: React.FormEvent) => {

@@ -1,10 +1,11 @@
 import {useState} from 'react'
-type tErrors = { [key: string]: boolean | string }
-type tValidate<v extends object> = (values: v) => { [key: string]: boolean | string }
+export type tErrors = { [key: string]: boolean | string }
+export type tValues = { [key: string]: any }
+export type tValidate<v extends object> = (values: v) => { [key: string]: boolean | string }
 
 interface useFormCtrlProps<v extends object> {
     initialValues: v,
-    valiadate?: tValidate<v>
+    validate?: tValidate<v>
 }
 
 const defaultValidate = <v extends object,>(values: v) => {
@@ -20,13 +21,13 @@ const defaultValidate = <v extends object,>(values: v) => {
 }
 
 const focusError = () => {
-    const errorInput: HTMLInputElement | null = document.querySelector(".input-error")
+    const errorInput: HTMLInputElement | null = document.querySelector(".form-input_error")
     if(errorInput) errorInput.focus()
 }
 
 const useFormCtrl = <v extends object,>({ 
     initialValues,
-    valiadate=defaultValidate,
+    validate=defaultValidate,
 }: useFormCtrlProps<v>) => {
     const [values, setValues] = useState<useFormCtrlProps<v>["initialValues"]>(initialValues)
     const [errors, setErrors] = useState<tErrors>({})
@@ -37,8 +38,8 @@ const useFormCtrl = <v extends object,>({
         setValues({ ...values, [target.name]: target.value})
     }
 
-    const validate = () => {
-        const formErrors = valiadate(values)
+    const validateValues = () => {
+        const formErrors = validate(values)
         setErrors(formErrors)
         setTimeout(() => {
             focusError();
@@ -49,10 +50,12 @@ const useFormCtrl = <v extends object,>({
 
     return {
         handleChange,
-        validate,
+        validate: validateValues,
         values,
         errors
     }
 }
+
+export type useFormCtrlReturnType = ReturnType<typeof useFormCtrl>;
 
 export default useFormCtrl

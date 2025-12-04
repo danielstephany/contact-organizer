@@ -17,9 +17,14 @@ const FormInputComp = ({
             <label className="form-input_label">
                 { label && <span className="form-input_label-text">{label}</span>}
                 <input 
-                    className={"form-input_input" + (error ? " input-error" : "")}
+                    className={"form-input_input" + (!!error ? " form-input_error" : "")}
                     {...others}
                 />
+                {
+                    typeof(error) === 'string' ?
+                        <span className="form-input_error-text">{error}</span> 
+                    : null
+                }
             </label>
         </div>
     )
@@ -42,6 +47,12 @@ const FormInput = styled(FormInputComp).attrs<formInputProps>(({})=>({}))`
         border: 1px solid ${({ error }) => error ? "#ff0000" : "#bbb"};
         border-radius: 4px;
         padding: 6px;
+    }
+    .form-input_error-text {
+        display: block;
+        font-size: 12px;
+        color: #ff0000;
+        margin-top: 4px;
     }
 `
 
