@@ -10,7 +10,7 @@ const validate = (values: tValues) => {
     const errors: tErrors = {};
 
     Object.entries(values).forEach(([key, value]) => {
-        if (key === "email" && !EMAIL_REGEX.test(value)){
+        if (key === "email" && value && !EMAIL_REGEX.test(value)){
             errors[key] = "Please enter a valid email"
         } else if (!value) {
             errors[key] = true
