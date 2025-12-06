@@ -10,6 +10,7 @@ const FormInputComp = ({
     label,
     className,
     error,
+    fullWidth,
     ...others
 }: formInputProps) => {
     return (
