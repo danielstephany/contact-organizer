@@ -19,6 +19,9 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  form {
+    width: 100%;
+  }
   /* Add any other global CSS resets or base styles here */
 `;
 

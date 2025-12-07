@@ -1,28 +1,52 @@
-import {useState} from 'react'
 import FormInput from '@src/components/controls/FormInput'
 import Grid from '@src/components/elements/Grid'
 import SectionActions from '@src/components/modules/SectionActions'
 import Button from '@src/components/controls/Button'
+import useFormCtrl from '@src/hooks/useFormCtrl'
+import type { tErrors, tValues } from "@src/hooks/useFormCtrl"
+import { EMAIL_REGEX } from "@src/constants/index"
 
-const ManageContactsForm = () => {
-    const [values, setValues] = useState({
-        firstName: ""
+const validate = (values: tValues) => {
+    const errors: tErrors = {};
+
+    Object.entries(values).forEach(([key, value]) => {
+        if (key === "email" && value && !EMAIL_REGEX.test(value)){
+            errors[key] = "Please enter a valid email"
+        } else if (!value) {
+            errors[key] = true
+        }
     })
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setValues({ ...values, [name]: value})
+    return errors
+}
+
+const ManageContactsForm = () => {
+
+    const formCtrl = useFormCtrl({
+        initialValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+        },
+        validate
+    })
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        formCtrl.validate();
     }
 
     return (
-        <form>
+        <form noValidate onSubmit={handleSubmit}>
             <Grid container spacingY={16} spacing={24}>
                 <Grid size={6}>
                     <FormInput 
                         label="First Name"
                         name="firstName"
-                        value={values.firstName}
-                        onChange={handleInputChange}
+                        value={formCtrl.values.firstName}
+                        onChange={formCtrl.handleChange}
+                        error={formCtrl.errors.firstName}
                         fullWidth
                     />
                 </Grid>
@@ -30,8 +54,9 @@ const ManageContactsForm = () => {
                     <FormInput
                         label="Last Name"
                         name="lastName"
-                        value={values.firstName}
-                        onChange={handleInputChange}
+                        value={formCtrl.values.lastName}
+                        onChange={formCtrl.handleChange}
+                        error={formCtrl.errors.lastName}
                         fullWidth
                     />
                 </Grid>
@@ -39,16 +64,16 @@ const ManageContactsForm = () => {
                     <FormInput
                         label="Email"
                         name="email"
-                        value={values.firstName}
-                        onChange={handleInputChange}
+                        value={formCtrl.values.email}
+                        onChange={formCtrl.handleChange}
+                        error={formCtrl.errors.email}
                         fullWidth
                     />
                 </Grid>
             </Grid>
             <SectionActions
-                paddingTop={24}
-                leftActions={<Button>Submit</Button>}
-                rightActions={<Button>Submit</Button>}
+                paddingTop={32}
+                rightActions={<Button type="submit">Submit</Button>}
             />
         </form>
     )

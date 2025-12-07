@@ -1,10 +1,19 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      babel:{
+          plugins: [
+            // Add your extra Babel plugin here
+            ["babel-plugin-styled-components", { "displayName": true }],
+          ],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@src': fileURLToPath(new URL('./src', import.meta.url)), // Alias '@' to the 'src' directory

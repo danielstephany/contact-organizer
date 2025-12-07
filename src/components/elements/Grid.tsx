@@ -14,7 +14,10 @@ const Grid = styled.div.attrs<gridProps>(({
     spacing,
 }) => ({
     spacing: spacing || initialSpacing,
-}))`
+   
+})).withConfig({
+    shouldForwardProp: (prop) => !['container', 'spacingX', 'spacingY', 'spacing', 'size'].includes(prop),
+})`
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
