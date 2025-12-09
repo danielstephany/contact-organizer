@@ -18,7 +18,7 @@ const ContentSectionHeader = styled.header`
     justify-content: space-between;
     align-items: center;
     padding: 24px; 16px;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.borderDefault};
 `
 
 const ContentSectionBody = styled.div`
