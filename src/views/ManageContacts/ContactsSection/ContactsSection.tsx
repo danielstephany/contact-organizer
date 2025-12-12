@@ -21,9 +21,10 @@ const ContactsSectionComp = ({
                     contacts ?
                         contacts.map(contact => (
                             <ContactListItem
+                                key={contact.email}
                                 firstName={contact.firstName}
                                 lastName={contact.lastName}
-                                email={contact.email}
+                                id={contact.email}
                             />
                         ))
                     : null
@@ -38,9 +39,14 @@ const ContactsSection = styled(ContactsSectionComp)`
     flex-direction: column;
     .contact-section__header {
         padding: 24px;
+        position: relative;
         &::after {
+            display: inline-block;
             content: "";
             width: calc(100% - 46px);
+            border-bottom: 1px solid ${({theme}) => theme.colors.borderDefault};
+            position: absolute;
+            bottom: 0;
 
         }
     }

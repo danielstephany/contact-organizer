@@ -12,6 +12,10 @@ const ManageContacts = () => {
         {firstName: "Matt", lastName: "Stephany", email: "Matt.stephany@d.com"},
     ])
 
+    const addContact = (contact: contactType) => {
+        setContacts([...contacts, contact])
+    }
+
     return (
         <BaseLayout
             sidePanelChildren={
@@ -21,7 +25,9 @@ const ManageContacts = () => {
             <ContentSection 
                 title="Manage your contacts here."
             >
-                <ManageContactsForm />
+                <ManageContactsForm 
+                    addContact={addContact}
+                />
             </ContentSection>
         </BaseLayout>
     )
