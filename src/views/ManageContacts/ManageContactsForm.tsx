@@ -5,6 +5,7 @@ import Button from '@src/components/controls/Button'
 import useFormCtrl from '@src/hooks/useFormCtrl'
 import type { tErrors, tValues } from "@src/hooks/useFormCtrl"
 import { EMAIL_REGEX } from "@src/constants/index"
+import type { contactType } from '@src/types/contact'
 
 const validate = (values: tValues) => {
     const errors: tErrors = {};
@@ -20,21 +21,32 @@ const validate = (values: tValues) => {
     return errors
 }
 
-const ManageContactsForm = () => {
+interface manageContactsFormProps {
+    addContact: (contact: contactType) => void
+}
+
+const initialValues ={
+    firstName: "",
+    lastName: "",
+    email: "",
+}
+
+const ManageContactsForm = ({
+    addContact
+}: manageContactsFormProps) => {
 
     const formCtrl = useFormCtrl({
-        initialValues: {
-            firstName: "",
-            lastName: "",
-            email: "",
-        },
+        initialValues,
         validate
     })
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        formCtrl.validate();
+        if(formCtrl.validate()){
+            addContact(formCtrl.values)
+            formCtrl.setValues(initialValues);
+        }
     }
 
     return (
