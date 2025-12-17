@@ -4,7 +4,7 @@ import BaseLayout from '@src/components/layouts/BaseLayout'
 import ContentSection from '@src/components/modules/ContentSection'
 import ContactsSection from './ContactsSection'
 import type {contactType} from '@src/types/contact'
-import Modal from "@src/components/modules/Modal"
+import ContactModal from "./ContactModal"
 
 
 const ManageContacts = () => {
@@ -18,6 +18,9 @@ const ManageContacts = () => {
         setContacts([...contacts, contact])
     }
 
+    const handleCloseContactModal = () => {
+        setOpenModal(false)
+    }
 
     return (
         <BaseLayout
@@ -33,7 +36,10 @@ const ManageContacts = () => {
                 />
             </ContentSection>
             <button onClick={() => {setOpenModal(!openModal)}}>toggle modal</button>
-            <Modal open={openModal}><button onClick={() => { setOpenModal(!openModal) }} >close</button></Modal>
+            <ContactModal 
+                open={openModal}
+                handleClose={handleCloseContactModal}
+            />
         </BaseLayout>
     )
 }
