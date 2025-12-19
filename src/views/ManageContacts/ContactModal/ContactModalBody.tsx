@@ -15,10 +15,16 @@ const ContactModalBodyComp = ({
 }: contactModalBodyProps) => {
     return (
         <div className={className}>
-            <Grid container spacing={16}>
-                <Text variant='title-2'>Contact Details</Text>
-            </Grid>
+            <div className="contact-modal-body__content">
+                <Grid container spacing={16}>
+                    <Grid size={12}>
+                        <Text variant='title-2' align={"center"}>Contact Details</Text>
+                    </Grid>
+                </Grid>
+            </div>
             <SectionActions 
+                padding={24}
+                border
                 rightActions={<Button onClick={handleClose}>Close</Button>}
             />
         </div>
@@ -27,6 +33,12 @@ const ContactModalBodyComp = ({
 
 const ContactModalBody = styled(ContactModalBodyComp)`
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #fff;
+    .contact-modal-body__content {
+        padding: 24px;
+    }
 ` as typeof ContactModalBodyComp
 
 export default ContactModalBody

@@ -18,7 +18,7 @@ const Grid = styled.div.attrs<gridProps>(({
 })).withConfig({
     shouldForwardProp: (prop) => !['container', 'spacingX', 'spacingY', 'spacing', 'size'].includes(prop),
 })`
-    display: flex;
+    display: ${({container}) => container ? "flex" : "block"};
     flex-wrap: wrap;
     align-items: stretch;
     justify-content: flex-start;

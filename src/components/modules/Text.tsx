@@ -45,6 +45,7 @@ const variantStyles: Record<Variant, ReturnType<typeof css>> = {
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
     as?: TextTag;
     variant?: Variant;
+    align?: "left" | "right" | "center",
     children: React.ReactNode;
 }
 
@@ -52,9 +53,10 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
 /* Component */
 /* ----------------------------------------- */
 
-const StyledText = styled.p<{ variant: Variant }>`
+const StyledText = styled.p<{ variant: Variant, align?: TextProps["align"] }>`
     margin: 0;
     ${({ variant }) => variantStyles[variant]}
+    ${({align}) => align ? `text-align: ${align};` : ""}
 `;
 
 const Text: React.FC<TextProps> = ({

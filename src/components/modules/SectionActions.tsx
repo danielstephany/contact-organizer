@@ -10,6 +10,7 @@ interface sectionActionsProps {
     paddingTop?: number,
     paddingBottom?: number,
     padding?: number
+    border?: boolean
 }
 
 const SectionActionsComp = ({ 
@@ -33,6 +34,7 @@ const SectionActions = styled(SectionActionsComp).attrs<sectionActionsProps>(({
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: ${({ border, theme }) => border ? `1px solid ${theme.colors.borderDefault}` : "none"};
     padding: ${({ paddingY, padding }) => ((paddingY || padding ) + "px")} ${({ paddingX, padding }) => ((paddingX || padding ) + "px") };
     ${({ paddingTop }) => paddingTop ? `padding-top: ${paddingTop}px;` : ""}
     ${({ paddingBottom }) => paddingBottom ? `padding-bottom: ${paddingBottom}px;` : ""}
