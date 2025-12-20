@@ -12,6 +12,7 @@ const ManageContacts = () => {
         {firstName: "Daniel", lastName: "Stephany", email: "daniel@d.com"},
         {firstName: "Matt", lastName: "Stephany", email: "Matt.stephany@d.com"},
     ])
+    const [activeContact, setActiveContact] = useState<contactType>();
     const [openModal, setOpenModal] = useState(false);
 
     const addContact = (contact: contactType) => {
@@ -22,10 +23,18 @@ const ManageContacts = () => {
         setOpenModal(false)
     }
 
+    const handleOpenContactModal = (contact: contactType) => () => {
+        setActiveContact(contact)
+        setOpenModal(true)
+    }
+
     return (
         <BaseLayout
             sidePanelChildren={
-                <ContactsSection contacts={contacts}/>
+                <ContactsSection 
+                    contacts={contacts}
+                    handleOpenContactModal={handleOpenContactModal}
+                />
             }
         >
             <ContentSection 
@@ -35,10 +44,10 @@ const ManageContacts = () => {
                     addContact={addContact}
                 />
             </ContentSection>
-            <button onClick={() => {setOpenModal(!openModal)}}>toggle modal</button>
             <ContactModal 
                 open={openModal}
                 handleClose={handleCloseContactModal}
+                contact={activeContact}
             />
         </BaseLayout>
     )

@@ -5,11 +5,13 @@ import type { contactType } from '@src/types/contact'
 interface contactsListProps {
     contacts: contactType[],
     className?: string
+    handleOpenContactModal: (contact:contactType) => () => void
 }
 
 const ContactsSectionComp = ({
     className, 
-    contacts
+    contacts,
+    handleOpenContactModal
  }: contactsListProps) => {
     return (
         <div className={className}>
@@ -21,10 +23,11 @@ const ContactsSectionComp = ({
                     contacts ?
                         contacts.map(contact => (
                             <ContactListItem
+                                onClick={handleOpenContactModal(contact)}
                                 key={contact.email}
                                 firstName={contact.firstName}
                                 lastName={contact.lastName}
-                                id={contact.email}
+                                email={contact.email}
                             />
                         ))
                     : null
