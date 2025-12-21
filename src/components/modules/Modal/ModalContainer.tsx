@@ -1,4 +1,32 @@
+import {useRef, useEffect} from "react"
 import styled from 'styled-components'
+import focusTrap from '@src/utils/focusTrap'
+
+interface ModalContainerCompProps {
+    className?: string,
+    children?: React.ReactNode
+}
+
+const ModalContainerComp = ({ 
+    className,
+    children
+}: ModalContainerCompProps) => {
+    const modalRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        let removeTrap = modalRef.current ? focusTrap(modalRef.current) : null
+
+        return () => {
+            if (removeTrap) removeTrap()
+        }
+    });
+
+    return (
+        <div className={className} ref={modalRef}>
+            {children}
+        </div>
+    )
+}
 
 interface modalContainerProps {
     size?: "sm" | "md" | "lg"
@@ -10,7 +38,7 @@ const sizeMap = {
     "lg": "100px"
 }
 
-const ModalContainer = styled.div.attrs<modalContainerProps>(() => ({})).withConfig({
+const ModalContainer = styled(ModalContainerComp).attrs<modalContainerProps>(() => ({})).withConfig({
     shouldForwardProp: (prop) => !["size"].includes(prop),
 })`
     display: flex;
