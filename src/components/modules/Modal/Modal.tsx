@@ -5,7 +5,7 @@ import ModalContainer from './ModalContainer'
 
 const transition = 200;
 
-interface modalProps {
+export interface modalProps {
     open: boolean,
     size?: "sm" | "md" | "lg",
     children: React.ReactNode
@@ -13,7 +13,8 @@ interface modalProps {
 
 interface IFocusableElement extends Element {
     focus?: () => void
-  }
+}
+
 
 const Modal = ({ 
     open,
@@ -65,9 +66,12 @@ const Modal = ({
         showModal ? 
         createPortal(
             <ModalOverlay 
-                fadeIn={fadeIn}                
+                fadeIn={fadeIn}               
             >
-                <ModalContainer size={size}>
+                <ModalContainer 
+                    size={size}
+                    closeModal={handleFadeOut} 
+                >
                     {children}
                 </ModalContainer>
             </ModalOverlay>, 

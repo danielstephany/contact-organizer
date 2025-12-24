@@ -4,20 +4,30 @@ import focusTrap from '@src/utils/focusTrap'
 
 interface ModalContainerCompProps {
     className?: string,
-    children?: React.ReactNode
+    children?: React.ReactNode,
+    closeModal: () => void
 }
 
 const ModalContainerComp = ({ 
     className,
-    children
+    children,
+    closeModal
 }: ModalContainerCompProps) => {
     const modalRef = useRef<HTMLDivElement>(null)
 
+    const handleEscapeModal = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+            closeModal()
+        }
+    }
+
     useEffect(() => {
         let removeTrap = modalRef.current ? focusTrap(modalRef.current) : null
+        modalRef.current?.addEventListener("keydown", handleEscapeModal)
 
         return () => {
             if (removeTrap) removeTrap()
+            modalRef.current?.removeEventListener("keydown", handleEscapeModal)
         }
     });
 
