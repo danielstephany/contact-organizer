@@ -1,10 +1,11 @@
 const focusTrap = (rootElement: HTMLElement) => {
     let activeIndex = 0
+    let escapeCallback: () => void | undefined;
     const focusElementList: NodeListOf<HTMLElement> = rootElement.querySelectorAll("input, button, select, textarea,  a[href], area[href]")
     const focusElementListEndIndex = focusElementList.length - 1
 
     focusElementList[activeIndex].focus()
-    console.log(focusElementList)
+
 
     const incrementFocus = () => {
         activeIndex = (activeIndex < focusElementListEndIndex) ? activeIndex + 1 : 0
@@ -16,6 +17,10 @@ const focusTrap = (rootElement: HTMLElement) => {
         focusElementList[activeIndex].focus()
     }
 
+    const setEscape = (fn: () => void) => {
+        escapeCallback = fn
+    }
+
     const updateFocus = (e: KeyboardEvent) => {
         e.preventDefault()
 
@@ -23,9 +28,12 @@ const focusTrap = (rootElement: HTMLElement) => {
             decrementFocus()
         } else if (e.key === "Tab"){
             incrementFocus()
+        } else if (e.key === "Escape" && escapeCallback){
+            escapeCallback()
         }
 
     }
+
 
     rootElement.addEventListener("keydown", updateFocus)
 
@@ -33,7 +41,10 @@ const focusTrap = (rootElement: HTMLElement) => {
         rootElement.removeEventListener("keydown", updateFocus)
     }
 
-    return remove
+    return {
+        remove,
+        setEscape,
+    }
 }
 
 export default focusTrap

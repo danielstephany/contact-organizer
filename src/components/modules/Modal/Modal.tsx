@@ -7,6 +7,7 @@ const transition = 200;
 
 export interface modalProps {
     open: boolean,
+    onClose: () => void
     size?: "sm" | "md" | "lg",
     children: React.ReactNode
 }
@@ -18,6 +19,7 @@ interface IFocusableElement extends Element {
 
 const Modal = ({ 
     open,
+    onClose,
     children,
     size="md"
 }: modalProps) => {
@@ -48,6 +50,7 @@ const Modal = ({
         setFadeIn(false)
         fadeInTimer.current = setTimeout(() => {
             setShowModal(false)
+            onClose();
         }, transition)
     }
 

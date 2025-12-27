@@ -15,19 +15,12 @@ const ModalContainerComp = ({
 }: ModalContainerCompProps) => {
     const modalRef = useRef<HTMLDivElement>(null)
 
-    const handleEscapeModal = (e: KeyboardEvent) => {
-        if (e.key === "Escape") {
-            closeModal()
-        }
-    }
 
     useEffect(() => {
-        let removeTrap = modalRef.current ? focusTrap(modalRef.current) : null
-        modalRef.current?.addEventListener("keydown", handleEscapeModal)
-
+        let focusTrapOpt = modalRef.current ? focusTrap(modalRef.current) : null
+        focusTrapOpt?.setEscape(closeModal)
         return () => {
-            if (removeTrap) removeTrap()
-            modalRef.current?.removeEventListener("keydown", handleEscapeModal)
+            if (focusTrapOpt?.remove) focusTrapOpt?.remove()
         }
     });
 

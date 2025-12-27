@@ -14,7 +14,7 @@ const ContactModal = ({
     contact
 }: contactModalProps) => {
     return (
-        <Modal open={open}>
+        <Modal open={open} onClose={handleClose}>
             <ContactModalBody
                 contact={contact}
                 handleClose={handleClose}
