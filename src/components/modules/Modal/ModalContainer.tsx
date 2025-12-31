@@ -55,6 +55,8 @@ const ModalContainer = styled(ModalContainerComp).attrs<modalContainerProps>(() 
     flex-direction: column;
     width: ${({ size }) => sizeMap[size || "md"]};
     max-width: 100%;
+    overflow: auto;
+    max-height: 100dvh;
 `
 
 export default ModalContainer
