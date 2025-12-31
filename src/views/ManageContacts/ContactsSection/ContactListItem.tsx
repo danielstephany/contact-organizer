@@ -23,7 +23,7 @@ const ContactItemComp = ({
 
     return (
         <li className={className} {...others}>
-            <button {...buttonProps} >{firstName + " " + lastName}</button>
+            <button tabIndex={0} {...buttonProps} >{firstName + " " + lastName}</button>
         </li>
     )
 }
@@ -43,6 +43,7 @@ const ContactItem = styled(ContactItemComp)`
         padding: 8px 4px;
         width: 100%;
         cursor: pointer;
+        &:focus,
         &:hover {
             color: #fff;
             background-color: ${({ theme }) => lighten(0.2, theme.colors.primary)};

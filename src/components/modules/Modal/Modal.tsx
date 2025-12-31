@@ -23,6 +23,7 @@ const Modal = ({
     children,
     size="md"
 }: modalProps) => {
+    const bodyRef = useRef(document.body);
     const modalTriggerEl = useRef<IFocusableElement>(document.activeElement)
     const fadeInTimer = useRef<ReturnType<typeof setTimeout> >(null);
     const [fadeIn, setFadeIn] = useState(false)
@@ -39,28 +40,35 @@ const Modal = ({
         }
     }
 
+    const setBodyOverflow = (value: string) => {
+        bodyRef.current.style.overflow = value
+    }
+
     const handleFadeIn = () => {
         setShowModal(true)
-        fadeInTimer.current = setTimeout(() => {
+        return fadeInTimer.current = setTimeout(() => {
             setFadeIn(true)
         }, 0)
     }
 
     const handleFadeOut = () => {
         setFadeIn(false)
-        fadeInTimer.current = setTimeout(() => {
+        return fadeInTimer.current = setTimeout(() => {
             setShowModal(false)
             onClose();
         }, transition)
     }
 
+
     useEffect(() => {
         if(open && !fadeIn){
-            handleFadeIn()
             storeModalTriggerEl()
+            setBodyOverflow("hidden")
+            handleFadeIn()
         } else {
-            handleFadeOut()
             focusModalTriggerElOnClose()
+            setBodyOverflow("initial")
+            handleFadeOut()
         }
 
     }, [open])

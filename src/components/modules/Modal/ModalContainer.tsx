@@ -25,7 +25,12 @@ const ModalContainerComp = ({
     });
 
     return (
-        <div className={className} ref={modalRef}>
+        <div 
+            className={className} 
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+        >
             {children}
         </div>
     )
