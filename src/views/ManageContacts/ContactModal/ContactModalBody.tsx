@@ -22,7 +22,7 @@ const ContactModalBodyComp = ({
             <div className="contact-modal-body__content">
                 <Grid container spacing={16}>
                     <Grid size={12}>
-                        <Text variant='title-2' align={"center"}>Contact Details</Text>
+                        <Text variant='title-2' align={"center"} mb>Contact Details</Text>
                     </Grid>
                 </Grid>
                 <Grid container spacing={16} as="dl">
