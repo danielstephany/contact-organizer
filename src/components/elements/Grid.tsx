@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-interface gridProps {
+interface styledGridProps {
     container?: boolean, 
     spacingX?: number,
     spacingY?: number, 
@@ -10,7 +10,7 @@ interface gridProps {
 
 const initialSpacing = 16;
 
-const Grid = styled.div.attrs<gridProps>(({
+const StyledGrid = styled.div.attrs<styledGridProps>(({
     spacing,
 }) => ({
     spacing: spacing || initialSpacing,
@@ -18,7 +18,7 @@ const Grid = styled.div.attrs<gridProps>(({
 })).withConfig({
     shouldForwardProp: (prop) => !['container', 'spacingX', 'spacingY', 'spacing', 'size'].includes(prop),
 })`
-    display: flex;
+    display: ${({container}) => container ? "flex" : "block"};
     flex-wrap: wrap;
     align-items: stretch;
     justify-content: flex-start;
@@ -38,5 +38,22 @@ const Grid = styled.div.attrs<gridProps>(({
     `}
     ${({ size }) => size ? `width: ${(8.333 * size).toFixed(2)}%;` : ""}
 `
+
+interface gridProps extends styledGridProps {
+    as?: "div" | "dl",
+    children?: React.ReactNode
+}
+
+const Grid = ({
+    as="div",
+    children,
+    ...others
+}: gridProps) => {
+    return (
+        <StyledGrid as={as} {...others}>
+            {children}
+        </StyledGrid>
+    )
+}
 
 export default Grid;

@@ -52,6 +52,8 @@ const useFormCtrl = <v extends object,>({
         handleChange,
         validate: validateValues,
         values,
+        setValues,
+        setErrors,
         errors
     }
 }
