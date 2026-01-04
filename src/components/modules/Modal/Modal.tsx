@@ -1,0 +1,95 @@
+import { createPortal } from 'react-dom'
+import { useEffect, useRef, useState } from 'react'
+import ModalOverlay from './ModalOverlay'
+import ModalContainer from './ModalContainer'
+
+const transition = 200;
+
+export interface modalProps {
+    open: boolean,
+    onClose: () => void
+    size?: "sm" | "md" | "lg",
+    children: React.ReactNode
+}
+
+interface IFocusableElement extends Element {
+    focus?: () => void
+}
+
+
+const Modal = ({ 
+    open,
+    onClose,
+    children,
+    size="md"
+}: modalProps) => {
+    const bodyRef = useRef(document.body);
+    const modalTriggerEl = useRef<IFocusableElement>(document.activeElement)
+    const fadeInTimer = useRef<ReturnType<typeof setTimeout> >(null);
+    const [fadeIn, setFadeIn] = useState(false)
+    const [showModal, setShowModal] = useState(open)
+
+    const storeModalTriggerEl = () => {
+        const activeElement = document.activeElement;
+        if(activeElement) modalTriggerEl.current = activeElement;
+    }
+
+    const focusModalTriggerElOnClose = () => {
+        if (modalTriggerEl?.current?.focus){
+            modalTriggerEl.current.focus()
+        }
+    }
+
+    const setBodyOverflow = (value: string) => {
+        bodyRef.current.style.overflow = value
+    }
+
+    const handleFadeIn = () => {
+        setShowModal(true)
+        return fadeInTimer.current = setTimeout(() => {
+            setFadeIn(true)
+        }, 0)
+    }
+
+    const handleFadeOut = () => {
+        setFadeIn(false)
+        return fadeInTimer.current = setTimeout(() => {
+            setShowModal(false)
+            onClose();
+        }, transition)
+    }
+
+
+    useEffect(() => {
+        if(open && !fadeIn){
+            storeModalTriggerEl()
+            setBodyOverflow("hidden")
+            handleFadeIn()
+        } else {
+            focusModalTriggerElOnClose()
+            setBodyOverflow("initial")
+            handleFadeOut()
+        }
+
+    }, [open])
+
+    return (
+        showModal ? 
+        createPortal(
+            <ModalOverlay 
+                fadeIn={fadeIn}               
+            >
+                <ModalContainer 
+                    size={size}
+                    closeModal={handleFadeOut} 
+                >
+                    {children}
+                </ModalContainer>
+            </ModalOverlay>, 
+            document.body
+        ) 
+        : null
+    )
+}
+
+export default Modal

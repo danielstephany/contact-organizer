@@ -1,22 +1,29 @@
 import styled from 'styled-components'
 import { lighten } from 'polished'
+import type { contactType } from '@src/types/contact'
 
-interface contactProps {
-    firstName: string,
-    lastName: string,
-    id: string,
-    className?: string
+interface contactProps extends contactType {
+    className?: string,
+    onClick: () => any
 }
+
+interface buttonPropsType {
+    onClick?: ()=> any
+} 
 
 const ContactItemComp = ({ 
     firstName,
     lastName,
     className,
+    onClick,
     ...others
 }: contactProps) => {
+    const buttonProps: buttonPropsType = {};
+    if(onClick) buttonProps.onClick = onClick;
+
     return (
         <li className={className} {...others}>
-            <button>{firstName + " " + lastName}</button>
+            <button tabIndex={0} {...buttonProps} >{firstName + " " + lastName}</button>
         </li>
     )
 }
@@ -36,6 +43,7 @@ const ContactItem = styled(ContactItemComp)`
         padding: 8px 4px;
         width: 100%;
         cursor: pointer;
+        &:focus,
         &:hover {
             color: #fff;
             background-color: ${({ theme }) => lighten(0.2, theme.colors.primary)};

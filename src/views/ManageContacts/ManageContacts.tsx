@@ -4,6 +4,7 @@ import BaseLayout from '@src/components/layouts/BaseLayout'
 import ContentSection from '@src/components/modules/ContentSection'
 import ContactsSection from './ContactsSection'
 import type {contactType} from '@src/types/contact'
+import ContactModal from "./ContactModal"
 
 
 const ManageContacts = () => {
@@ -11,15 +12,29 @@ const ManageContacts = () => {
         {firstName: "Daniel", lastName: "Stephany", email: "daniel@d.com"},
         {firstName: "Matt", lastName: "Stephany", email: "Matt.stephany@d.com"},
     ])
+    const [activeContact, setActiveContact] = useState<contactType>();
+    const [openModal, setOpenModal] = useState(false);
 
     const addContact = (contact: contactType) => {
         setContacts([...contacts, contact])
     }
 
+    const handleCloseContactModal = () => {
+        setOpenModal(false)
+    }
+
+    const handleOpenContactModal = (contact: contactType) => () => {
+        setActiveContact(contact)
+        setOpenModal(true)
+    }
+
     return (
         <BaseLayout
             sidePanelChildren={
-                <ContactsSection contacts={contacts}/>
+                <ContactsSection 
+                    contacts={contacts}
+                    handleOpenContactModal={handleOpenContactModal}
+                />
             }
         >
             <ContentSection 
@@ -29,6 +44,11 @@ const ManageContacts = () => {
                     addContact={addContact}
                 />
             </ContentSection>
+            <ContactModal 
+                open={openModal}
+                handleClose={handleCloseContactModal}
+                contact={activeContact}
+            />
         </BaseLayout>
     )
 }
