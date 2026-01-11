@@ -5,18 +5,22 @@ import ContentSection from '@src/components/modules/ContentSection'
 import ContactsSection from './ContactsSection'
 import type {contactType} from '@src/types/contact'
 import ContactModal from "./ContactModal"
+import { useAppDispatch, useAppSelector } from '@src/hooks/redux'
+import { addContact } from '@src/store/slices/contactsReducer'
 
 
 const ManageContacts = () => {
-    const [contacts, setContacts] = useState<contactType[]>([
-        {firstName: "Daniel", lastName: "Stephany", email: "daniel@d.com"},
-        {firstName: "Matt", lastName: "Stephany", email: "Matt.stephany@d.com"},
-    ])
+    // const [contacts, setContacts] = useState<contactType[]>([
+    //     {firstName: "Daniel", lastName: "Stephany", email: "daniel@d.com"},
+    //     {firstName: "Matt", lastName: "Stephany", email: "Matt.stephany@d.com"},
+    // ])
+    const dispatch = useAppDispatch();
+    const contacts = useAppSelector((store) => store.contacts)
     const [activeContact, setActiveContact] = useState<contactType>();
     const [openModal, setOpenModal] = useState(false);
 
-    const addContact = (contact: contactType) => {
-        setContacts([...contacts, contact])
+    const handleAddContact = (contact: contactType) => {
+        dispatch(addContact(contact))
     }
 
     const handleCloseContactModal = () => {
@@ -41,7 +45,7 @@ const ManageContacts = () => {
                 title="Manage your contacts here."
             >
                 <ManageContactsForm 
-                    addContact={addContact}
+                    addContact={handleAddContact}
                 />
             </ContentSection>
             <ContactModal 
