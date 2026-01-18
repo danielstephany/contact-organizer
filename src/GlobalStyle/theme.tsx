@@ -2,8 +2,9 @@ import { lighten } from 'polished'
 
 const theme = {
     colors: {
-        primary: "#002626",
-        primaryLite: lighten(0.1, "#002626"),
+        primary: { main: "#002626", lite: lighten(0.1, "#002626") },
+        secondary: { main: "", lite: "" },
+        secondaryLite: "",
         borderDefault: "#ccc",
     },
     styles: {

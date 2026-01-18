@@ -46,7 +46,7 @@ const ContactItem = styled(ContactItemComp)`
         &:focus,
         &:hover {
             color: #fff;
-            background-color: ${({ theme }) => lighten(0.2, theme.colors.primary)};
+            background-color: ${({ theme }) => lighten(0.2, theme.colors.primary.main)};
         }
     }
 `

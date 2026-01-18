@@ -49,6 +49,7 @@ const ContactModalBodyComp = ({
             <SectionActions 
                 padding={24}
                 border
+                leftActions={<Button variant="outline">Edit</Button>}
                 rightActions={<Button onClick={handleClose}>Close</Button>}
             />
         </div>
